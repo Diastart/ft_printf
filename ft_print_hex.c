@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_print_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Dias <dinursul@student.42.it>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 11:49:11 by Dias              #+#    #+#             */
-/*   Updated: 2025/01/14 18:03:08 by Dias             ###   ########.fr       */
+/*   Created: 2025/01/14 16:47:22 by Dias              #+#    #+#             */
+/*   Updated: 2025/01/14 16:50:20 by Dias             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_print_hex(unsigned int num, const char format)
 {
-	va_list	args;
-	int		i;
 	int		print_length;
+	char	*symbols;
 
-	i = 0;
 	print_length = 0;
-	va_start(args, format);
-	while (format[i])
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			print_length += ft_format(format[i], &args);
-		}
-		else
-			print_length += ft_print_char(format[i]);
-		i++;
-	}
-	va_end(args);
+	if (format == 'x')
+		symbols = "0123456789abcdef";
+	else
+		symbols = "0123456789ABCDEF";
+	if (num >= 16)
+		print_length += ft_print_hex(num / 16, format);
+	print_length += ft_print_char(symbols[num % 16]);
 	return (print_length);
 }

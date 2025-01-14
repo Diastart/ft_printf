@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_print_number.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Dias <dinursul@student.42.it>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 11:49:11 by Dias              #+#    #+#             */
-/*   Updated: 2025/01/14 18:03:08 by Dias             ###   ########.fr       */
+/*   Created: 2025/01/14 16:42:06 by Dias              #+#    #+#             */
+/*   Updated: 2025/01/14 18:07:52 by Dias             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_print_number(int n)
 {
-	va_list	args;
-	int		i;
 	int		print_length;
+	char	*num;
 
-	i = 0;
 	print_length = 0;
-	va_start(args, format);
-	while (format[i])
+	if (n == 0)
 	{
-		if (format[i] == '%')
-		{
-			i++;
-			print_length += ft_format(format[i], &args);
-		}
-		else
-			print_length += ft_print_char(format[i]);
-		i++;
+		write(1, "0", 1);
+		return (1);
 	}
-	va_end(args);
+	num = ft_itoa(n);
+	if (!num)
+		return (0);
+	write(1, num, ft_strlen(num));
+	print_length = ft_strlen(num);
+	free(num);
 	return (print_length);
 }

@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_print_hex_ptr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Dias <dinursul@student.42.it>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 11:49:11 by Dias              #+#    #+#             */
-/*   Updated: 2025/01/14 18:03:08 by Dias             ###   ########.fr       */
+/*   Created: 2025/01/14 16:41:30 by Dias              #+#    #+#             */
+/*   Updated: 2025/01/14 17:11:16 by Dias             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_print_hex_ptr(unsigned long long num)
 {
-	va_list	args;
-	int		i;
 	int		print_length;
+	char	*symbols;
 
-	i = 0;
 	print_length = 0;
-	va_start(args, format);
-	while (format[i])
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			print_length += ft_format(format[i], &args);
-		}
-		else
-			print_length += ft_print_char(format[i]);
-		i++;
-	}
-	va_end(args);
+	symbols = "0123456789abcdefg";
+	if (num >= 16)
+		print_length += ft_print_hex_ptr(num / 16);
+	print_length += ft_print_char(symbols[num % 16]);
 	return (print_length);
 }
